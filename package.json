@@ -1,0 +1,28 @@
+{
+  "name": "scraping_starter",
+  "version": "1.0.0",
+  "description": "Getting started with web scraping",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nbarnabee/scraping_starter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nbarnabee/scraping_starter/issues"
+  },
+  "homepage": "https://github.com/nbarnabee/scraping_starter#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
