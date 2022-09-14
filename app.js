@@ -15,8 +15,9 @@ try {
     let content = [];
 
     $(".article-item-col", data).each(function () {
-      const price = $(this).text();
-
+      let splitPattern = new RegExp(/\s\s+/g);
+      const price = $(this).text().trim().split(splitPattern);
+      // const price = $(this).text().replace(/\s\s+/g, " ");
       content.push({
         price,
       });
