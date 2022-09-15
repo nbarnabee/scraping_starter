@@ -14,7 +14,7 @@ const alloboissons = "https://www.alloboissons.ch/fra/products/promotions";
 const coop =
   "https://www.coop.ch/en/promotions/weekly-special-offers/special-offers-drinks/special-offers-in-beer/c/m_1809?q=%3AhighlightsKW&sort=highlightsKW&pageSize=120"; // lol that page size
 
-function scrapeDenner() {
+async function scrapeDenner() {
   let content = [];
   try {
     axios(denner).then((res) => {
@@ -37,7 +37,7 @@ function scrapeDenner() {
       return content;
     });
   } catch (err) {
-    console.log(error, error.message);
+    console.log(err);
   }
 }
 
@@ -55,7 +55,7 @@ function scrapeDenner() {
 */
 
 /*  Fetching data from Coop */
-function scrapeCoop() {
+async function scrapeCoop() {
   try {
     axios(coop).then((res) => {
       const data = res.data;
@@ -75,13 +75,12 @@ function scrapeCoop() {
 }
 
 app.get("/", async (req, res) => {
-  let dennerData;
   try {
-    await dennerData = scrapeDenner();
-  } catch (error) {
-    console.log(error);
+    let results = await scrapeDenner();
+    res.json(results || "Nope didn't work");
+  } catch (err) {
+    console.log(err);
   }
-  res.json(dennerData);
 });
 
 app.listen(PORT, () => {
