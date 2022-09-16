@@ -18,6 +18,7 @@ try {
   let content = [];
 
   /*  Fetching data from Denner */
+  /*
   axios(denner).then((res) => {
     const data = res.data;
     const $ = cheerio.load(data);
@@ -34,8 +35,9 @@ try {
         pricePerUnit: calcPricePerUnit(sales[1], sales[5]),
         conditions: sales[6] || null,
       });
+      */
 
-      /* Fetching data from Alloboissons 
+  /* Fetching data from Alloboissons 
 
       axios(alloboissons).then((res) => {
         const data = res.data;
@@ -47,21 +49,24 @@ try {
         });
       });
 */
+  //<p class="productTile-details__name-value" data-title-clamp="Appenzeller Quöllfrisch Beer pale">Appenzeller Quöllfrisch Beer pale</p>
+  /*  Fetching data from Coop */
 
-      /*  Fetching data from Coop */
+  axios(coop).then((res) => {
+    const data = res.data;
+    const $ = cheerio.load(data);
 
-      /* Helper function */
-
-      function calcPricePerUnit(salePrice, quantity) {
-        let price = Number(salePrice);
-        let quant = Number(quantity.slice(0, quantity.indexOf("x")).trim());
-        return (price / quant).toFixed(2);
-      }
-
-      app.get("/", (req, res) => {
-        res.json(content);
+    $("a").each(function () {
+      const info = $(this).attr("aria-label");
+      content.push({
+        store: "Coop",
+        info,
       });
     });
+  });
+
+  app.get("/", (req, res) => {
+    res.json(content);
   });
 } catch (error) {
   console.log(error, error.message);
@@ -70,3 +75,11 @@ try {
 app.listen(PORT, () => {
   console.log(`server is running on PORT:${PORT}`);
 });
+
+/* Helper function */
+
+function calcPricePerUnit(salePrice, quantity) {
+  let price = Number(salePrice);
+  let quant = Number(quantity.slice(0, quantity.indexOf("x")).trim());
+  return (price / quant).toFixed(2);
+}
